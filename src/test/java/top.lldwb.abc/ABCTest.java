@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class ABCTest {
     @Test
-    public static void test() throws IllegalAccessException, InstantiationException {
+    public void test() throws IllegalAccessException, InstantiationException {
         // 扫描IDataValidator所在的包 com.lm.validate
         Reflections reflections = new Reflections(ABC.class.getPackage().getName());
         // 获取包com.lm.validate下面所有IDataValidator实现类
