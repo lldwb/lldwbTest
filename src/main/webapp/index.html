@@ -1,0 +1,50 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>存档管理</title>
+    <head>
+        <script src="js/vue.js"></script>
+        <script src="js/vue-router.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入组件库 -->
+        <script src="js/element-ui@2.15.13.js"></script>
+    </head>
+<body>
+<div id="qrc">
+    <el-button @click="lldwb">lldwb</el-button>
+    <el-button @click="ll">ll</el-button>
+</div>
+<script type="text/javascript">
+    const vue = new Vue({
+        el: "#qrc",
+        methods: {
+            lldwb() {
+                $.ajax({
+                    url: "lldwb",
+                    success() {
+                        vue.$message({
+                            message: '开启成功',
+                            type: 'success'
+                        });
+                    }
+                })
+            },
+            ll(){
+                $.ajax({
+                    url: "ll",
+                    success(result) {
+                        console.log(result);
+                        vue.$message({
+                            message: '开启成功',
+                            type: 'success'
+                        });
+                    }
+                })
+            }
+        }
+    });
+</script>
+</body>
+</html>
