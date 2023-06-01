@@ -1,15 +1,17 @@
 package top.lldwb.servlet;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class BeanUtils {
     /**
-     *
      * @param req
      * @param clazz
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> T toBean(HttpServletRequest req, Class<T> clazz) {
         try {
@@ -18,13 +20,11 @@ public class BeanUtils {
                 String key = field.getName();
                 String value = req.getParameter(key);
                 if (!value.isEmpty()) {
-                    System.out.println(key);
-                    System.out.println(value);
                     field.setAccessible(true);
                     if (field.getType() == String.class) {
                         field.set(t, value);
                     } else {
-                        field.set(t, Integer.valueOf(value));
+                        field.set(t, valueOf(field.getType(),value));
                     }
                 }
             }
@@ -36,11 +36,13 @@ public class BeanUtils {
     }
 
     /**
-     * 基本数据类型转包装类
-     * @param fstype
+     * String转包装类
+     *
+     * @param value
      * @return
      */
-    private static Object transition(String fstype){
-        return null;
+    private static Object valueOf(Class<?> clazz, String value) throws Exception {
+        Method method = clazz.getDeclaredMethod("valueOf",String.class);
+        return method.invoke(null,value);
     }
 }
