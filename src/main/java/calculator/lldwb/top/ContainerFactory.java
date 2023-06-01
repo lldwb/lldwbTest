@@ -1,9 +1,10 @@
 package calculator.lldwb.top;
 
-import java.io.*;
+import calculator.lldwb.top.util.ScanUtils;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author 安然的尾巴
@@ -12,38 +13,54 @@ import java.util.Properties;
 public class ContainerFactory {
 
     /**
-     * 容器
+     * 单例容器
      */
     private static Map<String, Object> container = new HashMap<>();
+    /**
+     * 原型容器
+     */
+    private static Map<String, Class<?>> archetype = new HashMap<>();
 
     /**
-     * 在静态代码块中初始化整个容器工厂，解析properties文件中配置的对象，
-     * 创建实例放入到Map集合中
+     * 初始化容器
+     * 参数表示要扫描的包路径
      */
-    static {
-        // 返回输入流
-        try (InputStream input = ContainerFactory.class.getClassLoader().getResourceAsStream("config.properties")){
-            Properties prop = new Properties();
-            // 加载并读取 properties 文件的内容
-            prop.load(input);
-            // 循环遍历prop对象，得到每一个properties的键值对
-            prop.forEach((k, v) ->
-                    // 将key和创建好的对象(将v通过newInstance方法创建实例)保存到容器中
-                    container.put((String) k, newInstance((String) v))
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("解析失败:", e);
-        }
+    public ContainerFactory(String... packages) {
+        List<Class<?>> classList = ScanUtils.scan(packages);
+        resolveClass(classList);
     }
 
     /**
+     * 解析class集合，找到带有@Bean注解的类
+     */
+    private void resolveClass(List<Class<?>> classList) {
+        classList.forEach(clazz -> {
+            if (clazz.isAnnotationPresent(Bean.class)) {
+                Bean bean = clazz.getAnnotation(Bean.class);
+                // 获取 Bean 的作为 k
+                String k = bean.value();
+                // 判断是否需要唯一
+                if (bean.sole()) {
+                    // 唯一，添加到单例容器
+                    container.put(k, newInstance(clazz));
+                } else {
+                    // 不唯一，添加到原型容器
+                    archetype.put(k, clazz);
+                }
+            }
+        });
+    }
+
+
+    /**
      * 创建实例
-     * @param className 类的路径
+     *
+     * @param clazz 类
      * @return
      */
-    private static Object newInstance(String className) {
+    private static Object newInstance(Class<?> clazz) {
         try {
-            return Class.forName(className).getConstructor().newInstance();
+            return clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("实例创建失败:", e);
         }
@@ -53,6 +70,11 @@ public class ContainerFactory {
      * 容器工厂方法
      */
     public static <T> T getBean(String name) {
-        return (T) container.get(name);
+        // 判断单例容器中是否有
+        if (container.containsKey(name)) {
+            return (T) container.get(name);
+        } else {
+            return (T) newInstance(archetype.get(name));
+        }
     }
 }

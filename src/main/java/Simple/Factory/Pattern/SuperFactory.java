@@ -1,4 +1,4 @@
-package SimpleFactoryPattern;
+package Simple.Factory.Pattern;
 
 /**
  * @author 安然的尾巴

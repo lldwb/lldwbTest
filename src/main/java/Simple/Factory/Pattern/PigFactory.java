@@ -1,4 +1,4 @@
-package SimpleFactoryPattern;
+package Simple.Factory.Pattern;
 
 class PigFactory implements AnimalFactory {
     @Override

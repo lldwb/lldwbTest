@@ -1,4 +1,4 @@
-package SimpleFactoryPattern;
+package Simple.Factory.Pattern;
 
 interface Animal {
     /**

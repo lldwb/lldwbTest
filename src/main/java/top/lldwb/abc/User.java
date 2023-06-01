@@ -1,5 +1,6 @@
 package top.lldwb.abc;
 
+import calculator.lldwb.top.Bean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@Bean(value = "user")
+@Bean(value = "user",sole = false)
 public class User {
     /**
      * 用户ID，自增1，主键，非空
