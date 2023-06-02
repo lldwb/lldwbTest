@@ -1,6 +1,6 @@
 package top.lldwb.abc;
 
-import calculator.lldwb.top.Bean;
+import top.lldwb.StrategyPattern.anno.Bean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

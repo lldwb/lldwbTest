@@ -1,6 +1,7 @@
 package calculator.lldwb.top;
 
 import calculator.lldwb.top.util.ScanUtils;
+import top.lldwb.StrategyPattern.anno.Bean;
 
 import java.util.HashMap;
 import java.util.List;

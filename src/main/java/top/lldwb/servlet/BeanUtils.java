@@ -1,6 +1,9 @@
 package top.lldwb.servlet;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import top.lldwb.servlet.type.TypeSwitchChain;
+import top.lldwb.servlet.type.impl.IntegerSwitch;
+import top.lldwb.servlet.type.impl.StringSwitch;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -14,18 +17,17 @@ public class BeanUtils {
      * @return
      */
     public static <T> T toBean(HttpServletRequest req, Class<T> clazz) {
+        TypeSwitchChain typeSwitchChain = new TypeSwitchChain();
+        typeSwitchChain.addTypeSwitch(new StringSwitch());
+        typeSwitchChain.addTypeSwitch(new IntegerSwitch());
         try {
             T t = clazz.newInstance();
             for (Field field : clazz.getDeclaredFields()) {
                 String key = field.getName();
                 String value = req.getParameter(key);
-                if (!value.isEmpty()) {
+                if (value != null && !value.isEmpty()) {
                     field.setAccessible(true);
-                    if (field.getType() == String.class) {
-                        field.set(t, value);
-                    } else {
-                        field.set(t, valueOf(field.getType(),value));
-                    }
+                    field.set(t, typeSwitchChain.typeSwitch(field, value));
                 }
             }
             return t;
@@ -42,7 +44,7 @@ public class BeanUtils {
      * @return
      */
     private static Object valueOf(Class<?> clazz, String value) throws Exception {
-        Method method = clazz.getDeclaredMethod("valueOf",String.class);
-        return method.invoke(null,value);
+        Method method = clazz.getDeclaredMethod("valueOf", String.class);
+        return method.invoke(null, value);
     }
 }

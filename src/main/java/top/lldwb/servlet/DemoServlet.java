@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/***
- * @Date(时间)2023-06-01
- * @Author 家辉
- */
 @WebServlet("/user")
 public class DemoServlet extends HttpServlet {
 
