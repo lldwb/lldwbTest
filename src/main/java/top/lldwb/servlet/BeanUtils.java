@@ -18,8 +18,8 @@ public class BeanUtils {
      */
     public static <T> T toBean(HttpServletRequest req, Class<T> clazz) {
         TypeSwitchChain typeSwitchChain = new TypeSwitchChain();
-        typeSwitchChain.addTypeSwitch(new StringSwitch());
-        typeSwitchChain.addTypeSwitch(new IntegerSwitch());
+//        typeSwitchChain.addTypeSwitch(new StringSwitch());
+//        typeSwitchChain.addTypeSwitch(new IntegerSwitch());
         try {
             T t = clazz.newInstance();
             for (Field field : clazz.getDeclaredFields()) {

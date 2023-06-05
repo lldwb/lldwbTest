@@ -1,5 +1,7 @@
 package top.lldwb.servlet.type;
 
+import calculator.lldwb.top.util.ScanUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,24 @@ import java.util.List;
 public class TypeSwitchChain {
     List<TypeSwitch> list = new ArrayList<>();
 
-    /**
-     * 传入类型处理
-     *
-     * @param typeSwitch
-     */
-    public void addTypeSwitch(TypeSwitch typeSwitch) {
-        list.add(typeSwitch);
+    public TypeSwitchChain(){
+        ScanUtils.scanImpl(TypeSwitch.class,"top.lldwb.servlet.type.impl").forEach(clazz->{
+            try {
+                list.add((TypeSwitch) clazz.newInstance());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
+//    /**
+//     * 传入类型处理
+//     *
+//     * @param typeSwitch
+//     */
+//    public void addTypeSwitch(TypeSwitch typeSwitch) {
+//        list.add(typeSwitch);
+//    }
 
     public Object typeSwitch(Field field, String value) {
         for (TypeSwitch typeSwitch:list){
