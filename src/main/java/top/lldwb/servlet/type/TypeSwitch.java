@@ -18,5 +18,5 @@ public interface TypeSwitch {
      * @param value 需要转换的值
      * @return
      */
-    Object valueOf(Field field, String value);
+    Object valueOf(TypeSwitchChain typeSwitchChain, Field field, String value);
 }

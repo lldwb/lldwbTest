@@ -28,19 +28,17 @@ public class ScanUtils {
     /**
      * 扫描指定的包，并返回相关的实现类对象
      *
-     * @param clazz
-     * @param packages
+     * @param clazz 接口
+     * @param packages 包
      * @return
      */
     public static List<Class<?>> scanImpl(Class<?> clazz, String... packages) {
-        try (ScanResult scan = new ClassGraph().enableAllInfo().acceptPackages(packages).scan()) {
-            List<Class<?>> list = new ArrayList<>();
-            scan.getAllClasses().loadClasses().forEach(aClass -> {
-                if (clazz.isAssignableFrom(aClass) && Calculator.class != aClass) {
-                    list.add(aClass);
-                }
-            });
-            return list;
-        }
+        List<Class<?>> list = new ArrayList<>();
+        ScanUtils.scan(packages).forEach(aClass -> {
+            if (clazz.isAssignableFrom(aClass) && Calculator.class != aClass) {
+                list.add(aClass);
+            }
+        });
+        return list;
     }
 }

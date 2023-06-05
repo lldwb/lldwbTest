@@ -1,6 +1,7 @@
 package top.lldwb.servlet.type.impl;
 
 import top.lldwb.servlet.type.TypeSwitch;
+import top.lldwb.servlet.type.TypeSwitchChain;
 
 import java.lang.reflect.Field;
 
@@ -10,11 +11,11 @@ import java.lang.reflect.Field;
  */
 public class IntegerSwitch implements TypeSwitch {
     @Override
-    public Object valueOf(Field field, String value) {
+    public Object valueOf(TypeSwitchChain typeSwitchChain, Field field, String value) {
         if (field.getType() == Integer.class || field.getType() == Integer.TYPE) {
             return Integer.valueOf(value);
         } else {
-            return null;
+            return typeSwitchChain.doTypeSwitch(field,value);
         }
     }
 }

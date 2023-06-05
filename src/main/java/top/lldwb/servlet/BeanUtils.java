@@ -1,9 +1,6 @@
 package top.lldwb.servlet;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import top.lldwb.servlet.type.TypeSwitchChain;
-import top.lldwb.servlet.type.impl.IntegerSwitch;
-import top.lldwb.servlet.type.impl.StringSwitch;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -17,7 +14,6 @@ public class BeanUtils {
      * @return
      */
     public static <T> T toBean(HttpServletRequest req, Class<T> clazz) {
-        TypeSwitchChain typeSwitchChain = new TypeSwitchChain();
 //        typeSwitchChain.addTypeSwitch(new StringSwitch());
 //        typeSwitchChain.addTypeSwitch(new IntegerSwitch());
         try {
@@ -27,7 +23,7 @@ public class BeanUtils {
                 String value = req.getParameter(key);
                 if (value != null && !value.isEmpty()) {
                     field.setAccessible(true);
-                    field.set(t, typeSwitchChain.typeSwitch(field, value));
+                    field.set(t,new TypeSwitchChain().doTypeSwitch(field, value));
                 }
             }
             return t;
