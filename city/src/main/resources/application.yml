@@ -1,0 +1,2 @@
+config:
+  basePackage: top.lldwb.city.controller
