@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="vue">
+    <template>
+        <el-table
+                :data="city"
+                style="width: 100%">
+            <el-table-column
+                    prop="cityId"
+                    label="id"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="cityName"
+                    label="名字"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="cityCode"
+                    label="城市代码"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="province"
+                    label="省"
+                    width="180">
+            </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button @click="deleteCityInfo(scope.row.cityId)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div>
+            <el-button @click="previousPage()" v-if="pagination-count>=0">上一页</el-button>
+            <el-button @click="nextPage()">下一页</el-button>
+        </div>
+    </template>
+</div>
+</body>
+<script type="text/javascript">
+    // 查询事件
+    const selectCity = vueRouter => {
+        $.ajax({
+            url: "selectCityInfo",
+            dataType: "JSON",
+            data: {
+                pagination: vueRouter.pagination,
+                count: vueRouter.count
+            },
+            success(result) {
+                vueRouter.city = result
+            }
+        })
+    }
+    const vue = new Vue({
+        el: "#vue",
+        data: {
+            pagination: 0,
+            count: 10,
+            city: []
+        },
+        methods: {
+            // 下一页
+            nextPage() {
+                this.pagination += this.count;
+                selectCity(this)
+            },
+            // 上一页
+            previousPage() {
+                this.pagination -= this.count;
+                selectCity(this)
+            },
+            // 删除
+            deleteCityInfo(cityId) {
+                $.ajax({
+                    url: "deleteCityInfo",
+                    data: {
+                        cityId: cityId
+                    },
+                    success() {
+                        selectCity(vue)
+                    }
+                })
+            }
+        },
+        // vue加载事件
+        mounted() {
+            selectCity(this)
+        }
+    })
+</script>
+</html>

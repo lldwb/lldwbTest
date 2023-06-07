@@ -19,7 +19,11 @@ public class CityInfoDAO {
      * @return
      */
     public List<CityInfo> selectPagination(int pagination,int count){
-        System.out.println(pagination+":"+count);
-        return MySqlUtil.select("select city_id,city_name,city_code,province from city_info limit ?,?",new CityInfo(),pagination,count);
+        return new MySqlUtil().select("select city_id,city_name,city_code,province from city_info limit ?,?",new CityInfo(),pagination,count);
+    }
+
+    public void deleteCityInfo(int cityId){
+        MySqlUtil mySqlUtil = new MySqlUtil();
+        mySqlUtil.update("delete from city_info where city_id=?",cityId);
     }
 }

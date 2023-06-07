@@ -13,26 +13,36 @@ import java.util.List;
  * @version 1.0
  */
 public class MySqlUtil {
-    final static String URL = "jdbc:mysql://mysql.lldwb.top:33366/city?serverTimezone=Asia/Shanghai&useSSL=false";
-    final static String USER_NAME = "root";
-    final static String PASSWORD = "@dwb123456";
-    static Connection connection;
+    private final static String URL = "jdbc:mysql://mysql.lldwb.top:33366/city?serverTimezone=Asia/Shanghai&useSSL=false";
+    //  private   final static String URL = "jdbc:mysql://172.16.1.55:3306/city?serverTimezone=Asia/Shanghai&useSSL=false";
+    private final static String USER_NAME = "root";
+    private final static String PASSWORD = "@dwb123456";
+    private Connection connection;
+    private SqlExecutor sqlExecutor;
 
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public MySqlUtil() throws SQLException {
+    public MySqlUtil() {
+        try {
+            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+            sqlExecutor = new SqlExecutor(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static <T> List<T> select(String sql, T t, Object... objects) {
-        SqlExecutor sqlExecutor = new SqlExecutor(connection);
+    public <T> List<T> select(String sql, T t, Object... objects) {
         BeanListHandler<T> beanListHandler = (BeanListHandler<T>) new BeanListHandler<>(t.getClass());
         return sqlExecutor.executeQuery(sql, beanListHandler, objects);
+    }
+
+    public void update(String sql, Object... objects) {
+        sqlExecutor.executeUpdate(sql, objects);
     }
 }
