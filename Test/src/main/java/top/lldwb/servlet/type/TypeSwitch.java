@@ -14,9 +14,9 @@ public interface TypeSwitch {
      * 可以处理返回值
      * 不可以处理返回 null
      *
-     * @param field 字段
+     * @param clazz 类型
      * @param value 需要转换的值
      * @return
      */
-    Object valueOf(TypeSwitchChain typeSwitchChain, Field field, String value);
+    Object valueOf(TypeSwitchChain typeSwitchChain, Class<?> clazz, String value);
 }

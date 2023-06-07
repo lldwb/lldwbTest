@@ -4,6 +4,7 @@ import top.lldwb.servlet.type.TypeSwitch;
 import top.lldwb.servlet.type.TypeSwitchChain;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
 /**
@@ -12,11 +13,11 @@ import java.lang.reflect.Field;
  */
 public class StringSwitch implements TypeSwitch {
     @Override
-    public Object valueOf(TypeSwitchChain typeSwitchChain, Field field, String value) {
-        if (field.getType() == String.class) {
+    public Object valueOf(TypeSwitchChain typeSwitchChain, Class<?> clazz, String value) {
+        if (clazz == String.class) {
             return value;
         } else {
-            return typeSwitchChain.doTypeSwitch(field,value);
+            return typeSwitchChain.doTypeSwitch(clazz,value);
         }
     }
 }

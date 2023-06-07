@@ -35,10 +35,10 @@ public class TypeSwitchChain {
         iterator = list.listIterator();
     }
 
-    public Object doTypeSwitch(Field field, String value) {
+    public Object doTypeSwitch(Class<?> clazz, String value) {
         if (iterator.hasNext()) {
             TypeSwitch typeSwitch = iterator.next();
-            return typeSwitch.valueOf(this, field, value);
+            return typeSwitch.valueOf(this, clazz, value);
         } else {
             throw new RuntimeException("没有对应的链");
         }

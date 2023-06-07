@@ -14,6 +14,8 @@ public class DemoServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
         User user = BeanUtils.toBean(req, User.class);
         resp.getWriter().print(new ObjectMapper().writeValueAsString(user));
     }
