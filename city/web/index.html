@@ -13,6 +13,11 @@
 </head>
 <body>
 <div id="vue">
+    <div>
+        模糊查询：
+        <el-input v-model="name" placeholder="请输入内容"></el-input>
+        <el-button @click="select()">查询</el-button>
+    </div>
     <template>
         <el-table
                 :data="city"
@@ -39,49 +44,98 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
+                    <el-button type="text" @click="updateCityInfo(scope.row)">修改</el-button>
                     <el-button @click="deleteCityInfo(scope.row.cityId)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <div>
-            <el-button @click="previousPage()" v-if="pagination-count>=0">上一页</el-button>
-            <el-button @click="nextPage()">下一页</el-button>
+            <el-pagination
+                    background
+                    :current-page.sync=page
+                    layout="prev, pager, next"
+                    :total="count" @current-change="handleCurrentChange">
+            </el-pagination>
         </div>
     </template>
+
+    <el-dialog title="修改城市信息" :visible.sync="dialogFormVisible">
+        <el-form ref="form" :model="updateCityInfo" label-width="80px">
+            <el-form-item label="id" disabled="true">
+                <el-input v-model="updateCityInfo.cityId"></el-input>
+            </el-form-item>
+            <el-form-item label="名字">
+                <el-input v-model="updateCityInfo.cityName"></el-input>
+            </el-form-item>
+            <el-form-item label="代码">
+                <el-input v-model="updateCityInfo.cityCode"></el-input>
+            </el-form-item>
+            <el-form-item label="省">
+                <el-input v-model="updateCityInfo.province"></el-input>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
 </div>
 </body>
 <script type="text/javascript">
     // 查询事件
     const selectCity = vueRouter => {
-        $.ajax({
-            url: "selectCityInfo",
-            dataType: "JSON",
-            data: {
-                pagination: vueRouter.pagination,
-                count: vueRouter.count
-            },
-            success(result) {
-                vueRouter.city = result
-            }
-        })
+        if (vueRouter.name == "") {
+            $.ajax({
+                url: "selectCityInfo",
+                dataType: "JSON",
+                data: {
+                    page: vueRouter.page,
+                    length: vueRouter.length
+                },
+                success(result) {
+                    vueRouter.city = result.data
+                    vueRouter.count = result.count
+                }
+            })
+        } else {
+            $.ajax({
+                url: "selectCityInfoFuzzy",
+                dataType: "JSON",
+                data: {
+                    page: vueRouter.page,
+                    length: vueRouter.length,
+                    name: vueRouter.name
+                },
+                success(result) {
+                    vueRouter.city = result.data
+                    vueRouter.count = result.count
+                }
+            })
+        }
     }
     const vue = new Vue({
         el: "#vue",
         data: {
-            pagination: 0,
-            count: 10,
-            city: []
+            // 页数
+            page: 1,
+            // 显示数量
+            length: 10,
+            // 总数量
+            count: 0,
+            name: "",
+            city: [],
+            dialogFormVisible: false,
+            updateCityInfoData: {
+                cityId: 101010100,
+                cityName: "北京",
+                cityCode: "beijing",
+                province: "北京"
+            }
         },
         methods: {
-            // 下一页
-            nextPage() {
-                this.pagination += this.count;
-                selectCity(this)
+            // 翻页
+            handleCurrentChange() {
+                selectCity(this);
             },
-            // 上一页
-            previousPage() {
-                this.pagination -= this.count;
-                selectCity(this)
+            // 查询
+            select() {
+                selectCity(this);
             },
             // 删除
             deleteCityInfo(cityId) {
@@ -94,6 +148,12 @@
                         selectCity(vue)
                     }
                 })
+            },
+            // 修改
+            updateCityInfo(cityInfo) {
+                this.dialogFormVisible = true;
+                this.updateCityInfoData = cityInfo;
+                console.log(cityInfo);
             }
         },
         // vue加载事件

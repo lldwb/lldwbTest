@@ -3,6 +3,7 @@ package top.lldwb.servlet;
 import top.lldwb.servlet.type.TypeSwitchChain;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -24,7 +25,9 @@ public class BeanUtils {
                     field.setAccessible(true);
                     if (field.getType().isArray()) {
                         String[] values = req.getParameterValues(key);
-                        field.set(t, BeanUtils.toArray(field.getType(), values));
+                        System.out.println(field.getType().getComponentType());
+                        Object[] longs = BeanUtils.toArray(field.getType().getComponentType(), values);
+                        field.set(t, longs);
                     } else {
                         String value = req.getParameter(key);
                         field.set(t, new TypeSwitchChain().doTypeSwitch(field.getType(), value));
@@ -39,12 +42,10 @@ public class BeanUtils {
     }
 
     public static Object[] toArray(Class<?> clazz, String[] values) throws InstantiationException, IllegalAccessException {
-        List<Object> list = new ArrayList<>();
-        for (String value : values) {
-            System.out.println("value:"+value);
-            list.add(new TypeSwitchChain().doTypeSwitch(clazz.getComponentType(), value));
-//            java.lang.NumberFormatException;
+        Object[] objects = (Object[]) Array.newInstance(clazz,values.length);
+        for(int i=0;i<values.length;i++){
+            objects[i] =new TypeSwitchChain().doTypeSwitch(clazz, values[i]);
         }
-        return list.toArray();
+        return objects;
     }
 }

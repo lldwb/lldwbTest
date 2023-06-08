@@ -6696,7 +6696,7 @@
               var listeners = cbs.remove.length + 1;
               if (isDef(rm)) {
                   // we have a recursively passed down rm callback
-                  // increase the listeners count
+                  // increase the listeners length
                   rm.listeners += listeners;
               }
               else {
