@@ -13,6 +13,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
+    <!--    加上 * 拦截所有请求，默认不拦截jsp-->
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,4 +1,4 @@
-package top.lldwb.city.entity;
+package top.lldwb.city.model;
 
 import lombok.Data;
 import org.nf.db.util.Column;
