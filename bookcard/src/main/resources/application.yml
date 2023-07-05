@@ -1,2 +1,2 @@
 config:
-  basePackage: edu.nf.bookcard.controllerMySqlUtil
+  basePackage: edu.nf.bookcard.controller

@@ -5,7 +5,8 @@ import edu.nf.bookcard.entity.BookcardInfo;
 import edu.nf.bookcard.utils.MySqlUtil;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**

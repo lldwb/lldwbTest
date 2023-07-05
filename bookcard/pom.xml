@@ -8,27 +8,37 @@
     </parent>
     <artifactId>bookcard</artifactId>
     <packaging>war</packaging>
-    <name>testPaper Maven Webapp</name>
-    <url>http://maven.apache.org</url>
-    <build>
-        <finalName>bookcard</finalName>
-    </build>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.nf</groupId>
+            <artifactId>mvc-framework</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nf</groupId>
+            <artifactId>dbutils</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
+            <version>8.0.26</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
@@ -39,25 +49,21 @@
             <version>9.0.65</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.nf</groupId>
-            <artifactId>dbutils</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.nf</groupId>
-            <artifactId>mvc-framework</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <warSourceDirectory>webapp</warSourceDirectory>
+                    <!-- 指定web.xml路径 -->
+                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

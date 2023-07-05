@@ -3,7 +3,8 @@ package edu.nf.bookcard.dao;
 import edu.nf.bookcard.entity.BookcardInfo;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
