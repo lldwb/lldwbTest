@@ -30,12 +30,12 @@
 					</el-table-column>
 					<el-table-column prop="deposit" label="deposit" width="180">
 					</el-table-column>
-					<!-- <el-table-column label="操作">
-                <template slot-scope="scope">
-                    <el-button type="text" @click="updateCityInfo(scope.row)">修改</el-button>
-                    <el-button @click="deleteCityInfo(scope.row.cityId)">删除</el-button>
-                </template>
-            </el-table-column> -->
+					<el-table-column label="操作">
+						<template slot-scope="scope">
+							<el-button type="text" @click="updBookcardInfoFormVisible(scope.row)">修改</el-button>
+							<el-button @click="delBookcardInfo(scope.row.cid)">删除</el-button>
+						</template>
+					</el-table-column>
 				</el-table>
 				<!-- <div>
             <el-pagination
@@ -48,7 +48,8 @@
 			</template>
 
 			<el-button type="text" @click="addBookcardInfoFormVisible()">添加</el-button>
-			<el-dialog title="添加" :visible.sync="dialogFormVisible">
+
+			<el-dialog title="添加" :visible.sync="addDialogFormVisible">
 				<el-form ref="form" :model="bookcardInfo" label-width="80px">
 					<el-form-item label="name" disabled="true">
 						<el-input v-model="bookcardInfo.name"></el-input>
@@ -64,6 +65,24 @@
 					</el-form-item>
 				</el-form>
 				<el-button type="text" @click="addBookcardInfo()">确认</el-button>
+			</el-dialog>
+
+			<el-dialog title="修改" :visible.sync="updDialogFormVisible">
+				<el-form ref="form" :model="bookcardInfo" label-width="80px">
+					<el-form-item label="name" disabled="true">
+						<el-input v-model="bookcardInfo.name"></el-input>
+					</el-form-item>
+					<el-form-item label="sex">
+						<el-input v-model="bookcardInfo.sex"></el-input>
+					</el-form-item>
+					<el-form-item label="createDate">
+						<el-input v-model="bookcardInfo.createDate"></el-input>
+					</el-form-item>
+					<el-form-item label="deposit">
+						<el-input v-model="bookcardInfo.deposit"></el-input>
+					</el-form-item>
+				</el-form>
+				<el-button type="text" @click="updateCityInfo()">确认</el-button>
 			</el-dialog>
 		</div>
 	</body>
@@ -97,16 +116,18 @@
 		const vue = new Vue({
 			el: "#vue",
 			data: {
-				// 页数
-				page: 1,
-				// 显示数量
-				length: 10,
-				// 总数量
-				count: 0,
+				// // 页数
+				// page: 1,
+				// // 显示数量
+				// length: 10,
+				// // 总数量
+				// count: 0,
 				name: "",
 				bookcardInfos: [],
-				dialogFormVisible: false,
+				addDialogFormVisible: false,
+				updDialogFormVisible: false,
 				bookcardInfo: {
+					cid:"",
 					name: "",
 					sex: "",
 					createDate: "",
@@ -123,25 +144,43 @@
 					selectCity(this);
 				},
 				// 删除
-				deleteCityInfo(cityId) {
+				delBookcardInfo(cityId) {
 					$.ajax({
-						url: "deleteCityInfo",
+						url: "/bookcardInfo/del",
 						data: {
-							cityId: cityId
+							cid: cityId
 						},
 						success() {
-							selectCity(vue)
+							selectCity(vue);
 						}
 					})
 				},
 				// 修改
-				updateCityInfo(cityInfo) {
-					this.dialogFormVisible = true;
-					this.updateCityInfoData = cityInfo;
+				updBookcardInfoFormVisible(cityInfo) {
+					this.updDialogFormVisible = true;
+					this.bookcardInfo = cityInfo;
 					console.log(cityInfo);
 				},
+				// 修改
+				updBookcardInfo(cityInfo) {
+					$.ajax({
+						url: "/bookcardInfo/upd",
+						data: {
+							cid: vue.bookcardInfo.cid,
+							name: vue.bookcardInfo.name,
+							sex: vue.bookcardInfo.sex,
+							createDate: vue.bookcardInfo.createDate,
+							deposit: vue.bookcardInfo.deposit
+						},
+						success(result) {
+							selectCity(vue);
+							this.updDialogFormVisible = true;
+						}
+					})
+				},
+				// 添加
 				addBookcardInfoFormVisible() {
-					this.dialogFormVisible = true;
+					this.addDialogFormVisible = true;
 				},
 				addBookcardInfo() {
 					$.ajax({
@@ -154,7 +193,7 @@
 						},
 						success(result) {
 							selectCity(vue);
-							this.dialogFormVisible = false;
+							this.addDialogFormVisible = false;
 						}
 					})
 				}

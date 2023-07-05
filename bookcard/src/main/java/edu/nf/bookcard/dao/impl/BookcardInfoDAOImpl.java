@@ -13,7 +13,17 @@ import java.util.List;
 public class BookcardInfoDAOImpl implements BookcardInfoDAO {
     @Override
     public void add(String name, String sex, String createDate, String deposit) {
-        MySqlUtil.update("insert into bookcard_info(name, sex, create_date, deposit) values (?,?,?,?);", name, sex, createDate, deposit);
+        MySqlUtil.update("insert into bookcard_info(name, sex, create_date, deposit) values (?,?,?,?)", name, sex, createDate, deposit);
+    }
+
+    @Override
+    public void upd(int cid, String name, String sex, String createDate, String deposit) {
+        MySqlUtil.update("update bookcard_info set name=?, sex=?, create_date=?, deposit=? where cid=?", name, sex, createDate, deposit, cid);
+    }
+
+    @Override
+    public void del(int cid) {
+        MySqlUtil.update("delete from bookcard_info where cid=?", cid);
     }
 
     @Override

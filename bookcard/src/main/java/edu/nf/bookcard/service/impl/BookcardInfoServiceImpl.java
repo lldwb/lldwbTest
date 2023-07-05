@@ -1,8 +1,8 @@
 package edu.nf.bookcard.service.impl;
 
-import edu.nf.bookcard.entity.BookcardInfo;
 import edu.nf.bookcard.dao.BookcardInfoDAO;
 import edu.nf.bookcard.dao.impl.BookcardInfoDAOImpl;
+import edu.nf.bookcard.entity.BookcardInfo;
 import edu.nf.bookcard.service.BookcardInfoService;
 
 import java.util.List;
@@ -16,6 +16,18 @@ public class BookcardInfoServiceImpl implements BookcardInfoService {
     public void add(String name, String sex, String createDate, String deposit) {
         BookcardInfoDAO dao = new BookcardInfoDAOImpl();
         dao.add(name, sex, createDate, deposit);
+    }
+
+    @Override
+    public void upd(int cid, String name, String sex, String createDate, String deposit) {
+        BookcardInfoDAO dao = new BookcardInfoDAOImpl();
+        dao.upd(cid, name, sex, createDate, deposit);
+    }
+
+    @Override
+    public void del(int cid) {
+        BookcardInfoDAO dao = new BookcardInfoDAOImpl();
+        dao.del(cid);
     }
 
     @Override

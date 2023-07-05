@@ -14,15 +14,23 @@ import org.nf.web.servlet.view.JsonView;
  */
 public class BookcardInfoController extends BaseController {
     @RequestMapping("/bookcardInfo/add")
-    public View addBookcardInfo(@RequestParam("name") String name, @RequestParam("sex") String sex, @RequestParam("deposit") String deposit, @RequestParam("createDate") String createDate) {
-        System.out.println(111);
-        System.out.println(name);
-        System.out.println(sex);
-        System.out.println(createDate);
-        System.out.println(deposit);
-        System.out.println(222);
+    public View addBookcardInfo(@RequestParam("name") String name, @RequestParam("sex") String sex, @RequestParam("createDate") String createDate, @RequestParam("deposit") String deposit) {
         BookcardInfoService service = new BookcardInfoServiceImpl();
         service.add(name, sex, createDate, deposit);
+        return new JsonView(success());
+    }
+
+    @RequestMapping("/bookcardInfo/upd")
+    public View updBookcardInfo(@RequestParam("cid") int cid, @RequestParam("name") String name, @RequestParam("sex") String sex, @RequestParam("createDate") String createDate, @RequestParam("deposit") String deposit) {
+        BookcardInfoService service = new BookcardInfoServiceImpl();
+        service.upd(cid, name, sex, createDate, deposit);
+        return new JsonView(success());
+    }
+
+    @RequestMapping("/bookcardInfo/del")
+    public View delBookcardInfo(@RequestParam("cid") int cid) {
+        BookcardInfoService service = new BookcardInfoServiceImpl();
+        service.del(cid);
         return new JsonView(success());
     }
 
