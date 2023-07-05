@@ -5,7 +5,6 @@ import edu.nf.bookcard.dao.BookcardInfoDAO;
 import edu.nf.bookcard.dao.impl.BookcardInfoDAOImpl;
 import edu.nf.bookcard.service.BookcardInfoService;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -14,9 +13,9 @@ import java.util.List;
  */
 public class BookcardInfoServiceImpl implements BookcardInfoService {
     @Override
-    public void add(BookcardInfo bookcardInfo) {
+    public void add(String name, String sex, String createDate, String deposit) {
         BookcardInfoDAO dao = new BookcardInfoDAOImpl();
-        dao.add(bookcardInfo.getName(),bookcardInfo.getSex(), (Date) bookcardInfo.getCreateDate(),bookcardInfo.getDeposit());
+        dao.add(name, sex, createDate, deposit);
     }
 
     @Override

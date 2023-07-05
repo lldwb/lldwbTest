@@ -11,9 +11,8 @@ import java.util.List;
 public interface BookcardInfoService {
     /**
      * 添加借书卡
-     * @param bookcardInfo 借书卡对象
      */
-    void add(BookcardInfo bookcardInfo);
+    void add(String name, String sex, String createDate, String deposit);
 
     /**
      * 查询所有借书卡

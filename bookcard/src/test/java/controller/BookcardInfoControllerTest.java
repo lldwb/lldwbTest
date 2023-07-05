@@ -11,6 +11,6 @@ public class BookcardInfoControllerTest {
     @Test
     public void get(){
         BookcardInfoController controller = new BookcardInfoController();
-        System.out.println(controller.get());
+        System.out.println(controller.getBookcardInfo());
     }
 }

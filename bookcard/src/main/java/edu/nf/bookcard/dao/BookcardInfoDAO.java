@@ -2,9 +2,6 @@ package edu.nf.bookcard.dao;
 
 import edu.nf.bookcard.entity.BookcardInfo;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,7 +17,7 @@ public interface BookcardInfoDAO {
      * @param createDate 时间
      * @param deposit    押金
      */
-    void add(String name, String sex, Date createDate, BigDecimal deposit);
+    void add(String name, String sex, String createDate, String deposit);
 
     /**
      * 查询所有借书卡

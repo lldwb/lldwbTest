@@ -20,7 +20,7 @@ public class BookcardInfo {
     @Column("sex")
     private String sex;
     @Column("create_date")
-    private Object createDate;
+    private LocalDateTime createDate;
     @Column("deposit")
     private BigDecimal deposit;
 }

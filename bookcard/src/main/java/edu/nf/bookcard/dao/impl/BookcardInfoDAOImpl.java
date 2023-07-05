@@ -4,9 +4,6 @@ import edu.nf.bookcard.dao.BookcardInfoDAO;
 import edu.nf.bookcard.entity.BookcardInfo;
 import edu.nf.bookcard.utils.MySqlUtil;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,7 +12,7 @@ import java.util.List;
  */
 public class BookcardInfoDAOImpl implements BookcardInfoDAO {
     @Override
-    public void add(String name, String sex, Date createDate, BigDecimal deposit) {
+    public void add(String name, String sex, String createDate, String deposit) {
         MySqlUtil.update("insert into bookcard_info(name, sex, create_date, deposit) values (?,?,?,?);", name, sex, createDate, deposit);
     }
 
