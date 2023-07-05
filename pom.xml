@@ -10,6 +10,7 @@
         <module>Test</module>
         <module>city</module>
         <module>AI</module>
+        <module>bookcard</module>
     </modules>
 
     <properties>
