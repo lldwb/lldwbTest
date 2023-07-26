@@ -15,7 +15,7 @@ public class LongSwitch implements TypeSwitch {
         if (clazz == Long.class || clazz == Long.TYPE) {
             return Long.valueOf(value);
         } else {
-            return typeSwitchChain.doTypeSwitch(clazz,value);
+            return typeSwitchChain.doTypeSwitch(clazz, value);
         }
     }
 }

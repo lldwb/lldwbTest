@@ -42,9 +42,9 @@ public class BeanUtils {
     }
 
     public static Object[] toArray(Class<?> clazz, String[] values) throws InstantiationException, IllegalAccessException {
-        Object[] objects = (Object[]) Array.newInstance(clazz,values.length);
-        for(int i=0;i<values.length;i++){
-            objects[i] =new TypeSwitchChain().doTypeSwitch(clazz, values[i]);
+        Object[] objects = (Object[]) Array.newInstance(clazz, values.length);
+        for (int i = 0; i < values.length; i++) {
+            objects[i] = new TypeSwitchChain().doTypeSwitch(clazz, values[i]);
         }
         return objects;
     }
