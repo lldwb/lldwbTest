@@ -1,8 +1,7 @@
 package top.lldwb.servlet.type;
 
-import calculator.lldwb.top.util.ScanUtils;
+import calculator.lldwb.top.util.ScanUtil;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,12 +17,12 @@ public class TypeSwitchChain {
     private static List<Class<?>> classList;
 
     static {
-        classList =ScanUtils.scanImpl(TypeSwitch.class, "top.lldwb.servlet.type.impl");
+        classList = ScanUtil.scan(TypeSwitch.class, "top.lldwb.servlet.type.impl");
     }
 
     public TypeSwitchChain() {
         List<TypeSwitch> list = new ArrayList<>();
-        classList.forEach(clazz->{
+        classList.forEach(clazz -> {
             try {
                 list.add((TypeSwitch) clazz.newInstance());
             } catch (InstantiationException e) {

@@ -1,6 +1,6 @@
 package calculator.lldwb.top;
 
-import calculator.lldwb.top.util.ScanUtils;
+import calculator.lldwb.top.util.ScanUtil;
 import top.lldwb.StrategyPattern.anno.Bean;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class ContainerFactory {
      * 参数表示要扫描的包路径
      */
     public ContainerFactory(String... packages) {
-        List<Class<?>> classList = ScanUtils.scan(packages);
+        List<Class<?>> classList = ScanUtil.scan(packages);
         resolveClass(classList);
     }
 

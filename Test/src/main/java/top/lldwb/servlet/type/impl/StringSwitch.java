@@ -17,7 +17,7 @@ public class StringSwitch implements TypeSwitch {
         if (clazz == String.class) {
             return value;
         } else {
-            return typeSwitchChain.doTypeSwitch(clazz,value);
+            return typeSwitchChain.doTypeSwitch(clazz, value);
         }
     }
 }

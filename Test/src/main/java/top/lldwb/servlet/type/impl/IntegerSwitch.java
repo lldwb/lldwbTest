@@ -17,7 +17,7 @@ public class IntegerSwitch implements TypeSwitch {
         if (clazz == Integer.class || clazz == Integer.TYPE) {
             return Integer.valueOf(value);
         } else {
-            return typeSwitchChain.doTypeSwitch(clazz,value);
+            return typeSwitchChain.doTypeSwitch(clazz, value);
         }
     }
 }
