@@ -54,13 +54,13 @@ public class CityInfoController {
         return null;
     }
 
-    @RequestMapping("/file")
-    public void upload(Part[] parts){
-        for (Part part:parts){
-            System.out.println(part.getName());
-            System.out.println(part.getSize());
-            System.out.println(part.getContentType());
-            System.out.println("===================-0987654321");
-        }
-    }
+//    @RequestMapping("/file")
+//    public void upload(Part[] parts){
+//        for (Part part:parts){
+//            System.out.println(part.getName());
+//            System.out.println(part.getSize());
+//            System.out.println(part.getContentType());
+//            System.out.println("===================-0987654321");
+//        }
+//    }
 }

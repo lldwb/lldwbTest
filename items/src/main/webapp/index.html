@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-router.js"></script>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+	<body>
+		<div id="vue">
+			<!-- <div>
+       模糊查询：
+       <el-input v-model="itemName" placeholder="请输入内容"></el-input>
+       <el-button @click="select()">查询</el-button>
+   </div> -->
+			<template>
+				<el-table :data="items" style="width: 100%">
+					<el-table-column prop="itemId" label="itemId" width="180">
+					</el-table-column>
+					<el-table-column prop="itemName" label="itemName" width="180">
+					</el-table-column>
+					<el-table-column prop="itemPrice" label="itemPrice" width="180">
+					</el-table-column>
+					<el-table-column prop="ccreateTime" label="ccreateTime" width="180">
+					</el-table-column>
+					<el-table-column prop="status" label="status" width="180">
+					</el-table-column>
+					<el-table-column label="操作">
+						<template slot-scope="scope">
+							<el-button type="text" @click="upditemFormVisible(scope.row)">修改</el-button>
+							<el-button @click="delitem(scope.row.itemId)">删除</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<!-- <div>
+            <el-pagination
+                    background
+                    :current-page.sync=page
+                    layout="prev, pager, next"
+                    :total="count" @current-change="handleCurrentChange">
+            </el-pagination>
+        </div> -->
+			</template>
+
+			<el-button type="text" @click="additemFormVisible()">添加</el-button>
+
+			<el-dialog title="添加" :visible.sync="addDialogFormVisible">
+				<el-form ref="form" :model="item" label-width="80px">
+					<el-form-item label="itemName" disabled="true">
+						<el-input v-model="item.itemName"></el-input>
+					</el-form-item>
+					<el-form-item label="itemPrice">
+						<el-input v-model="item.itemPrice"></el-input>
+					</el-form-item>
+					<el-form-item label="createTime">
+						<el-input v-model="item.createTime"></el-input>
+					</el-form-item>
+					<el-form-item label="status">
+						<el-input v-model="item.status"></el-input>
+					</el-form-item>
+				</el-form>
+				<el-button type="text" @click="additem()">确认</el-button>
+			</el-dialog>
+
+			<el-dialog title="修改" :visible.sync="updDialogFormVisible">
+				<el-form ref="form" :model="item" label-width="80px">
+					<el-form-item label="itemName" disabled="true">
+						<el-input v-model="item.itemName"></el-input>
+					</el-form-item>
+					<el-form-item label="itemPrice">
+						<el-input v-model="item.itemPrice"></el-input>
+					</el-form-item>
+					<el-form-item label="createTime">
+						<el-input v-model="item.createTime"></el-input>
+					</el-form-item>
+					<el-form-item label="status">
+						<el-input v-model="item.status"></el-input>
+					</el-form-item>
+				</el-form>
+				<el-button type="text" @click="updateCityInfo()">确认</el-button>
+			</el-dialog>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// 查询事件
+		const selectCity = vueRouter => {
+			if (vueRouter.inquire == "") {
+				$.ajax({
+					url: "/item/get",
+					dataType: "JSON",
+					success(result) {
+						vueRouter.items = result.data
+					}
+				})
+			} else {
+				// $.ajax({
+				//     url: "selectCityInfoFuzzy",
+				//     dataType: "JSON",
+				//     data: {
+				//         page: vueRouter.page,
+				//         length: vueRouter.length,
+				//         itemName: vueRouter.itemName
+				//     },
+				//     success(result) {
+				//         vueRouter.city = result.data
+				//         vueRouter.count = result.count
+				//     }
+				// })
+			}
+		}
+		const vue = new Vue({
+			el: "#vue",
+			data: {
+				// // 页数
+				// page: 1,
+				// // 显示数量
+				// length: 10,
+				// // 总数量
+				// count: 0,
+				inquire: "",
+				items: [],
+				addDialogFormVisible: false,
+				updDialogFormVisible: false,
+				item: {
+					itemId: "",
+					itemName: "",
+					itemPrice: "",
+					createTime: "",
+					status: "",
+				}
+			},
+			methods: {
+				// 翻页
+				handleCurrentChange() {
+					selectCity(this);
+				},
+				// 查询
+				select() {
+					selectCity(this);
+				},
+				// 删除
+				delitem(cityId) {
+					$.ajax({
+						url: "/item/del",
+						data: {
+							itemId: cityId
+						},
+						success() {
+							selectCity(vue);
+						}
+					})
+				},
+				// 修改
+				upditemFormVisible(cityInfo) {
+					this.updDialogFormVisible = true;
+					this.item = cityInfo;
+					console.log(cityInfo);
+				},
+				// 修改
+				upditem(cityInfo) {
+					$.ajax({
+						url: "/item/upd",
+						data: {
+							itemId: vue.item.itemId,
+							itemName: vue.item.itemName,
+							itemPrice: vue.item.itemPrice,
+							createTime: vue.item.createTime,
+							status: vue.item.status
+						},
+						success(result) {
+							selectCity(vue);
+							this.updDialogFormVisible = true;
+						}
+					})
+				},
+				// 添加
+				additemFormVisible() {
+					this.addDialogFormVisible = true;
+				},
+				additem() {
+					$.ajax({
+						url: "/item/add",
+						data: {
+							itemName: vue.item.itemName,
+							itemPrice: vue.item.itemPrice,
+							createTime: vue.item.createTime,
+							status: vue.item.status
+						},
+						success(result) {
+							selectCity(vue);
+							this.addDialogFormVisible = false;
+						}
+					})
+				}
+			},
+			// vue加载事件
+			mounted() {
+				selectCity(this)
+			}
+		})
+	</script>
+</html>

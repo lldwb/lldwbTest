@@ -6,10 +6,14 @@
         <artifactId>lldwbTest</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>city</artifactId>
+    <artifactId>items</artifactId>
     <packaging>war</packaging>
-    <name>city Maven Webapp</name>
-    <url>http://maven.apache.org</url>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.nf</groupId>
@@ -60,11 +64,12 @@
 <!--                <artifactId>maven-war-plugin</artifactId>-->
 <!--                <version>3.3.2</version>-->
 <!--                <configuration>-->
-<!--                    <warSourceDirectory>web</warSourceDirectory>-->
+<!--                    <warSourceDirectory>webapp</warSourceDirectory>-->
 <!--                    &lt;!&ndash; 指定web.xml路径 &ndash;&gt;-->
-<!--                    <webXml>web\WEB-INF\web.xml</webXml>-->
+<!--                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
 <!--        </plugins>-->
 <!--    </build>-->
+
 </project>

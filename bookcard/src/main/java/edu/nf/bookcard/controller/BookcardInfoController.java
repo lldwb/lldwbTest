@@ -35,8 +35,8 @@ public class BookcardInfoController extends BaseController {
     }
 
     @RequestMapping("/bookcardInfo/get")
-    public View getBookcardInfo() {
+    public View getBookcardInfo(@RequestParam("where") String sex) {
         BookcardInfoService service = new BookcardInfoServiceImpl();
-        return new JsonView(success(service.get()));
+        return new JsonView(success(service.get(sex)));
     }
 }

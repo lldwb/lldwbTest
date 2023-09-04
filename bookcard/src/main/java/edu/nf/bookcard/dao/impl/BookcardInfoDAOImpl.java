@@ -30,4 +30,9 @@ public class BookcardInfoDAOImpl implements BookcardInfoDAO {
     public List<BookcardInfo> get() {
         return MySqlUtil.queryList(BookcardInfo.class, "select cid,name, sex, create_date, deposit from bookcard_info");
     }
+
+    @Override
+    public List<BookcardInfo> getBySex(String sex) {
+        return MySqlUtil.queryList(BookcardInfo.class, "select cid,name, sex, create_date, deposit from bookcard_info sex sex=?",sex);
+    }
 }

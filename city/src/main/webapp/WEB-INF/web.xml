@@ -4,13 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!-- 配置请求总控器DispatcherServlet（接收所有请求） -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.nf.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 在容器启动时就会初始化Servlet -->
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
+        <!--    加上 * 拦截所有请求，默认不拦截jsp-->
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 </web-app>

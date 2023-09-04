@@ -29,5 +29,5 @@ public interface BookcardInfoService {
      *
      * @return 借书卡集合
      */
-    List<BookcardInfo> get();
+    List<BookcardInfo> get(String sex);
 }

@@ -31,8 +31,11 @@ public class BookcardInfoServiceImpl implements BookcardInfoService {
     }
 
     @Override
-    public List<BookcardInfo> get() {
+    public List<BookcardInfo> get(String sex) {
         BookcardInfoDAO dao = new BookcardInfoDAOImpl();
-        return dao.get();
+        if ("".equals(sex)|| sex ==null|| sex.isEmpty()){
+            return dao.get();
+        }else
+            return  dao.getBySex(sex);
     }
 }

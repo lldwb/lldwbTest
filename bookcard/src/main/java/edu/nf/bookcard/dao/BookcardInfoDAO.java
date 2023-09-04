@@ -35,4 +35,11 @@ public interface BookcardInfoDAO {
      * @return 借书卡集合
      */
     List<BookcardInfo> get();
+
+    /**
+     * 查询所有借书卡
+     *
+     * @return 借书卡集合
+     */
+    List<BookcardInfo> getBySex(String sex);
 }
